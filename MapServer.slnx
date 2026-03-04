@@ -1,0 +1,18 @@
+<Solution>
+  <Folder Name="/Solution Items/">
+    <File Path=".editorconfig" />
+    <File Path="nuget.config" />
+  </Folder>
+  <Folder Name="/src/">
+    <File Path="src/Directory.Build.props" />
+    <File Path="src/Directory.Packages.props" />
+    <Project Path="src/IO.MapFile.Validation/IO.MapFile.Validation.csproj" Id="c2eb41ee-8aa7-494d-8658-d0fc9b7c3be9" />
+    <Project Path="src/IO.MapFile/IO.MapFile.csproj" />
+  </Folder>
+  <Folder Name="/tests/">
+    <File Path="tests/Directory.Build.props" />
+    <File Path="tests/Directory.Packages.props" />
+    <Project Path="tests/IO.MapFile.Tests/IO.MapFile.Tests.csproj" />
+    <Project Path="tests/IO.MapFile.Validation.Tests/IO.MapFile.Validation.Tests.csproj" Id="dfaa5ae8-ad82-4284-bb90-a7ed5a8560cf" />
+  </Folder>
+</Solution>

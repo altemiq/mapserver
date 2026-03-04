@@ -1,0 +1,8 @@
+<Project>
+
+  <PropertyGroup>
+	  <Company>Altemiq</Company>
+	  <RootNamespace>$(Company).$(MSBuildProjectName)</RootNamespace>
+  </PropertyGroup>
+
+</Project>

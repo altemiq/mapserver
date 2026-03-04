@@ -1,0 +1,21 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net10.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+    <NoWarn>$(NoWarn);S1133</NoWarn>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="CodeOfChaos.Unions" VersionOverride="6.5.0" />
+    <PackageReference Include="CodeOfChaos.Unions.Generators" VersionOverride="6.5.0" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Using Include="CodeOfChaos.Unions" />
+    <Using Include="$(RootNamespace).Unions" />
+    <Using Include="$(RootNamespace).Types" />
+  </ItemGroup>
+
+</Project>

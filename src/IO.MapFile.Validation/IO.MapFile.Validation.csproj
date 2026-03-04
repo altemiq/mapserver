@@ -1,0 +1,21 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net10.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="FluentValidation" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\IO.MapFile\IO.MapFile.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Using Include="FluentValidation;FluentValidation.Results"/>
+  </ItemGroup>
+
+</Project>

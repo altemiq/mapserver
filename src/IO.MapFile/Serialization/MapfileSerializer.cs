@@ -65,9 +65,12 @@ public static class MapfileSerializer
                 w.Web(map.Web);
             }
 
-            foreach (var cfg in map.Config)
+            if (map.Config is not null)
             {
-                w.PropKeyValuePair("CONFIG", cfg.Key, cfg.Value);
+                foreach (var cfg in map.Config)
+                {
+                    w.PropKeyValuePair("CONFIG", cfg.Key, cfg.Value);
+                }
             }
 
             w.Metadata(map.Metadata);
@@ -265,7 +268,7 @@ public static class MapfileSerializer
 
         public void Dictionary(string name, IDictionary<string, string> dictionary)
         {
-            if (this.options.OmitEmptyBlocks && dictionary.Count == 0)
+            if (dictionary is null || (this.options.OmitEmptyBlocks && dictionary.Count == 0))
             {
                 return;
             }
@@ -292,7 +295,7 @@ public static class MapfileSerializer
 
         public void Validation(IDictionary<string, string> v)
         {
-            if (this.options.OmitEmptyBlocks && v.Count == 0)
+            if (v is null || (this.options.OmitEmptyBlocks && v.Count == 0))
             {
                 return;
             }
@@ -333,23 +336,23 @@ public static class MapfileSerializer
                     }
                 });
 
-        public void Web(Web w) =>
+        public void Web(Web web) =>
             this.Block(
                 "WEB",
                 () =>
                 {
-                    this.PropQuoted("BROWSEFORMAT", w.BrowseFormat);
-                    this.PropQuoted("LEGENDFORMAT", w.LegendFormat);
-                    this.PropQuoted("EMPTY", w.EmptyUrl);
-                    this.PropQuoted("ERROR", w.ErrorUrl);
-                    this.PropQuoted("FOOTER", w.FooterTemplate);
-                    this.PropQuoted("HEADER", w.HeaderTemplate);
-                    this.PropQuoted("IMAGEPATH", w.ImagePath);
-                    this.PropQuoted("IMAGEURL", w.ImageUrl);
-                    this.Prop("MAXSCALEDENOM", w.MaxScaleDenom);
-                    this.PropQuoted("MAXTEMPLATE", w.MaxTemplate);
-                    this.Metadata(w.Metadata);
-                    this.Validation(w.Validation);
+                    this.PropQuoted("BROWSEFORMAT", web.BrowseFormat);
+                    this.PropQuoted("LEGENDFORMAT", web.LegendFormat);
+                    this.PropQuoted("EMPTY", web.EmptyUrl);
+                    this.PropQuoted("ERROR", web.ErrorUrl);
+                    this.PropQuoted("FOOTER", web.FooterTemplate);
+                    this.PropQuoted("HEADER", web.HeaderTemplate);
+                    this.PropQuoted("IMAGEPATH", web.ImagePath);
+                    this.PropQuoted("IMAGEURL", web.ImageUrl);
+                    this.Prop("MAXSCALEDENOM", web.MaxScaleDenom);
+                    this.PropQuoted("MAXTEMPLATE", web.MaxTemplate);
+                    this.Metadata(web.Metadata);
+                    this.Validation(web.Validation);
                 });
 
         public void OutputFormat(OutputFormat of) =>

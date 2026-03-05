@@ -8,8 +8,21 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="CodeOfChaos.Unions" VersionOverride="6.5.0" />
-    <PackageReference Include="CodeOfChaos.Unions.Generators" VersionOverride="6.5.0" />
+    <PackageReference Include="CodeOfChaos.Unions" VersionOverride="6.4.0" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="BuilderGenerator">
+      <PrivateAssets>analyzers</PrivateAssets>
+    </PackageReference>
+    <!--<PackageReference Include="BuilderGenerator">
+      <PrivateAssets>all</PrivateAssets>
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers</IncludeAssets>
+    </PackageReference>-->
+    <PackageReference Include="CodeOfChaos.Unions.Generators">
+      <PrivateAssets>all</PrivateAssets>
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers</IncludeAssets>
+    </PackageReference>
   </ItemGroup>
 
   <ItemGroup>

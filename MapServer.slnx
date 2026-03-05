@@ -6,6 +6,7 @@
   <Folder Name="/src/">
     <File Path="src/Directory.Build.props" />
     <File Path="src/Directory.Packages.props" />
+    <Project Path="src/BuilderGeneratorTests/BuilderGeneratorTests.csproj" Id="bb5cc09b-7f18-4c1a-8e39-04658d64d209" />
     <Project Path="src/IO.MapFile.Validation/IO.MapFile.Validation.csproj" Id="c2eb41ee-8aa7-494d-8658-d0fc9b7c3be9" />
     <Project Path="src/IO.MapFile/IO.MapFile.csproj" />
   </Folder>

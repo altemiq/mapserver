@@ -22,5 +22,5 @@ public sealed class Projection
     /// <summary>
     /// Gets pROJ parameter lines as declared (e.g., "init=epsg:4326" or "proj=utm", ...).
     /// </summary>
-    public List<string> Parameters { get; } = [];
+    public IList<string> Parameters { get; internal init; } = [];
 }

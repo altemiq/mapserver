@@ -8,8 +8,6 @@ namespace Altemiq.IO.MapFile;
 
 using System.Drawing;
 
-
-
 /// <summary>
 /// SCALEBAR block – scalebar rendering and placement.
 /// </summary>

@@ -35,7 +35,7 @@ public sealed class Style
     public Angle Angle { get; set; }
 
     /// <summary>Gets pattern for dashed lines, e.g., [10, 5, 4, 5]. Units follow SIZEUNITS/renderer.</summary>
-    public IList<double> Pattern { get; } = [];
+    public IList<double> Pattern { get; internal init; } = [];
 
     /// <summary>Gets or sets gap for decorations along lines; semantics depend on symbolization.</summary>
     public double? Gap { get; set; }

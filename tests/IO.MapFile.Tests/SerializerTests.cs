@@ -115,68 +115,81 @@ public class SerializerTests
         var builder = Builders.MapBuilder.New();
 
         builder
-            .Extent(-180, -90, 180, 90)
-            .ImageColor(System.Drawing.Color.White)
-            .UseWeb(web =>
-                web
-                    .Metadata("ows_title", "AIMS Clearance Map")
-                    .Metadata("ows_onlineresource", "${PROXY_HOST_URL}/maps/wfs")
-                    .Metadata("ows_srs", "EPSG:4326 EPSG:4269 EPSG:3978 EPSG:3857")
-                    .Metadata("ows_enable_request", "*"))
-            .AddProjection(p => p.Epsg(4326))
-            .AddLayer(layer =>
-                layer
-                    .Group("catalog")
-                    .Name("dataset_las_boundary")
-                    .ConnectionType(ConnectionType.PostGIS)
-                    .Connection("${CONNECTIONSTRINGS__POSTGRES__CATALOG}")
-                    .Processing("CLOSE_CONNECTION", "DEFER")
-                    .Status(MapStatus.On)
-                    .Metadata("wfs_enable_request", "*")
-                    .Metadata("wfs_title", "dataset_las_boundary")
-                    .Metadata("wfs_srs", "EPSG:4326")
-                    .Metadata("gml_include_items", "all")
-                    .Metadata("gml_featureid", "file_id")
-                    .Metadata("gml_types", "auto")
-                    .Type(LayerType.Polygon)
-                    .Data(
+            .WithExtent(-180, -90, 180, 90)
+            .WithImageColor(System.Drawing.Color.White)
+            .WithWeb(() =>
+                Builders.WebBuilder
+                    .New()
+                    .WithMetadata(new Dictionary<string, string>()
+                    {
+                        { "ows_title", "AIMS Clearance Map"},
+                        {"ows_onlineresource", "${PROXY_HOST_URL}/maps/wfs"},
+                        {"ows_srs", "EPSG:4326 EPSG:4269 EPSG:3978 EPSG:3857"},
+                        {"ows_enable_request", "*"}
+                    }))
+            .WithProjection(Builders.ProjectionBuilder.New().WithEpsg(4326).Build)
+            .WithLayers(() =>
+            [
+                Builders.LayerBuilder.New()
+                    .WithGroup("catalog")
+                    .WithName("dataset_las_boundary")
+                    .WithConnectionType(ConnectionType.PostGIS)
+                    .WithConnection("${CONNECTIONSTRINGS__POSTGRES__CATALOG}")
+                    .WithProcessing(dictionary => dictionary.Add("CLOSE_CONNECTION", "DEFER"))
+                    .WithStatus(MapStatus.On)
+                    .WithMetadata(dictionary =>
+                    {
+                        dictionary.Add("wfs_enable_request", "*");
+                        dictionary.Add("wfs_title", "dataset_las_boundary");
+                        dictionary.Add("wfs_srs", "EPSG:4326");
+                        dictionary.Add("gml_include_items", "all");
+                        dictionary.Add("gml_featureid", "file_id");
+                        dictionary.Add("gml_types", "auto");
+                    })
+                    .WithType(LayerType.Polygon)
+                    .WithData(
                     """
-                         geometry from (
-                           SELECT
-                             las.id AS file_id,
-                             las.dataset_id,
-                             las.organization,
-                             las.file_name,
-                             las.parent_file_name,
-                             las.metadata,
-                             las.version,
-                             las.boundary::geometry as geometry
-                           FROM dataset_files las
-                           JOIN latest_dataset_files ON latest_dataset_files.file_id = las.id
-                           WHERE data_type = 'DatasetLasFile'
-                         ) as subquery using unique file_id using srid=4326
-                         """)
-                    .Filter("%org%")
-                    .FilterItem("organization")
-                    .Validation("org", "^[a-zA-Z\\-]+$")
-                    .Validation("default_org", "Development")
-                    .AddProjection(p => p.Epsg(4326)))
-            .AddLayer(layer =>
-                layer
-                    .Group("catalog")
-                    .Name("dataset_tif_boundary")
-                    .ConnectionType(ConnectionType.PostGIS)
-                    .Connection("${CONNECTIONSTRINGS__POSTGRES__CATALOG}")
-                    .Processing("CLOSE_CONNECTION", "DEFER")
-                    .Status(MapStatus.On)
-                    .Metadata("wfs_enable_request", "*")
-                    .Metadata("wfs_title", "dataset_tif_boundary")
-                    .Metadata("wfs_srs", "EPSG:4326")
-                    .Metadata("gml_include_items", "all")
-                    .Metadata("gml_featureid", "file_id")
-                    .Metadata("gml_types", "auto")
-                    .Type(LayerType.Polygon)
-                    .Data(
+                            geometry from (
+                            SELECT
+                                las.id AS file_id,
+                                las.dataset_id,
+                                las.organization,
+                                las.file_name,
+                                las.parent_file_name,
+                                las.metadata,
+                                las.version,
+                                las.boundary::geometry as geometry
+                            FROM dataset_files las
+                            JOIN latest_dataset_files ON latest_dataset_files.file_id = las.id
+                            WHERE data_type = 'DatasetLasFile'
+                            ) as subquery using unique file_id using srid=4326
+                            """)
+                    .WithFilter("%org%")
+                    .WithFilterItem("organization")
+                    .WithValidation(dictionary =>
+                    {
+                        dictionary.Add("org", "^[a-zA-Z\\-]+$");
+                        dictionary.Add("default_org", "Development");
+                    })
+                    .WithProjection(Builders.ProjectionBuilder.New().WithEpsg(4326).Build),
+                Builders.LayerBuilder.New()
+                    .WithGroup("catalog")
+                    .WithName("dataset_tif_boundary")
+                    .WithConnectionType(ConnectionType.PostGIS)
+                    .WithConnection("${CONNECTIONSTRINGS__POSTGRES__CATALOG}")
+                    .WithProcessing(dictionary => dictionary.Add(            "CLOSE_CONNECTION", "DEFER"))
+                    .WithStatus(MapStatus.On)
+                    .WithMetadata(dictionary =>
+                    {
+                        dictionary.Add(            "wfs_enable_request", "*");
+                        dictionary.Add("wfs_title", "dataset_tif_boundary");
+                        dictionary.Add("wfs_srs", "EPSG:4326");
+                        dictionary.Add("gml_include_items", "all");
+                        dictionary.Add("gml_featureid", "file_id");
+                        dictionary.Add("gml_types", "auto");
+                    })
+                    .WithType(LayerType.Polygon)
+                    .WithData(
                     """
                          geometry from (
                            SELECT
@@ -193,27 +206,32 @@ public class SerializerTests
                            WHERE data_type = 'DatasetTifFile'
                          ) as subquery using unique file_id using srid=4326
                          """)
-                    .Filter("%org%")
-                    .FilterItem("organization")
-                    .Validation("org", "^[a-zA-Z\\-]+$")
-                    .Validation("default_org", "Development")
-                    .AddProjection(p => p.Epsg(4326)))
-            .AddLayer(layer =>
-                layer
-                    .Group("review")
-                    .Name("dataset_review_region")
-                    .ConnectionType(ConnectionType.PostGIS)
-                    .Connection("${CONNECTIONSTRINGS__POSTGRES__REVIEW}")
-                    .Processing("CLOSE_CONNECTION", "DEFER")
-                    .Status(MapStatus.On)
-                    .Metadata("wfs_enable_request", "*")
-                    .Metadata("wfs_title", "dataset_review_region")
-                    .Metadata("wfs_srs", "EPSG:4326")
-                    .Metadata("gml_include_items", "all")
-                    .Metadata("gml_featureid", "review_id")
-                    .Metadata("gml_types", "auto")
-                    .Type(LayerType.Polygon)
-                    .Data(
+                    .WithFilter("%org%")
+                    .WithFilterItem("organization")
+                    .WithValidation(dictionary =>
+                    {
+                        dictionary.Add("org", "^[a-zA-Z\\-]+$");
+                        dictionary.Add("default_org", "Development");
+                    })
+                    .WithProjection(Builders.ProjectionBuilder.New().WithEpsg(4326).Build),
+                Builders.LayerBuilder.New()
+                    .WithGroup("review")
+                    .WithName("dataset_review_region")
+                    .WithConnectionType(ConnectionType.PostGIS)
+                    .WithConnection("${CONNECTIONSTRINGS__POSTGRES__REVIEW}")
+                    .WithProcessing(dictionary => dictionary.Add("CLOSE_CONNECTION", "DEFER"))
+                    .WithStatus(MapStatus.On)
+                    .WithMetadata(dictionary =>
+                    {
+                        dictionary.Add("wfs_enable_request", "*");
+                        dictionary.Add("wfs_title", "dataset_review_region");
+                        dictionary.Add("wfs_srs", "EPSG:4326");
+                        dictionary.Add("gml_include_items", "all");
+                        dictionary.Add("gml_featureid", "review_id");
+                        dictionary.Add("gml_types", "auto");
+                    })
+                    .WithType(LayerType.Polygon)
+                    .WithData(
                     """
                          geometry from (
                            SELECT
@@ -232,11 +250,15 @@ public class SerializerTests
                              AND status <> 'Deleted'
                          ) as subquery using unique review_id using srid=4326
                          """)
-                    .Filter("%org%")
-                    .FilterItem("organization")
-                    .Validation("org", "^[a-zA-Z\\-]+$")
-                    .Validation("default_org", "Development")
-                    .AddProjection(p => p.Epsg(4326)));
+                    .WithFilter("%org%")
+                    .WithFilterItem("organization")
+                    .WithValidation(dictionary =>
+                    {
+                        dictionary.Add("org", "^[a-zA-Z\\-]+$");
+                        dictionary.Add("default_org", "Development");
+                    })
+                    .WithProjection(Builders.ProjectionBuilder.New().WithEpsg(4326).Build)
+            ]);
 
         var serialized = TestHelpers.NormalizeMapfile(Serialization.MapfileSerializer.Serialize(builder.Build()));
 
@@ -388,92 +410,111 @@ public class SerializerTests
         var builder = Builders.MapBuilder.New();
 
         builder
-            .Name("WMS")
-            .Size(1224, 683)
-            .Units(MapUnits.Meters)
-            .ImageColor(System.Drawing.Color.White)
-            .FontSet("/etc/mapserver/styles/fonts/fonts.txt")
-            .SymbolSet("/etc/mapserver/styles/symbols/symbols.sym")
-            .ImageType("png24")
-            .MaxSize(4096)
-            .UseWeb(web =>
-                web
-                    .FooterTemplate("/etc/mapserver/styles/templates/footer.html")
-                    .HeaderTemplate("/etc/mapserver/styles/templates/header.html")
-                    .ImagePath("/ms4w/tmp/ms_tmp/")
-                    .ImageUrl("/ms_tmp/")
-                    .Metadata("wms_title", "AIMS Clearance Map")
-                    .Metadata("wms_onlineresource", "${PROXY_HOST_URL}/maps/wms")
-                    .Metadata("wms_srs", "EPSG:4326 EPSG:4269 EPSG:3978 EPSG:3857")
-                    .Metadata("wms_enable_request", "*")
-                    .Metadata("wms_feature_info_mime_type", "text/html")
-                    .Metadata("tile_map_edge_buffer", "8"))
-            .Config("MS_ERRORFILE", "stderr")
-            .AddOutputFormat(outputFormat =>
-                outputFormat
-                    .Name("png24")
-                    .MimeType(System.Net.Mime.MediaTypeNames.Image.Png)
-                    .Driver("AGG/PNG")
-                    .Extension("png")
-                    .ImageMode("RGB")
-                    .Transparent(true))
-            .AddProjection(projection =>
-                projection
-                    .Line("proj=longlat")
-                    .Line("ellps=GRS80")
-                    .Line("towgs84=0,0,0,0,0,0,0")
-                    .Line("no_defs"))
-            .UseLegend(legend =>
-                legend
-                    .KeySize(20, 10)
-                    .KeySpacing(5, 5)
-                    .Label(label =>
-                        label
-                            .Size("MEDIUM")
-                            .Offset(0, 0)
-                            .ShadowSize(1, 1)
-                            .Type("BITMAP")))
-            .UseQueryMap(queryMap =>
-                queryMap
-                    .Size(-1, -1)
-                    .Status(MapStatus.Off)
-                    .Style(QueryMapStyle.Hilite))
-            .UseScaleBar(scaleBar =>
-                scaleBar
-                    .Intervals(4)
-                    .Label(label =>
-                        label
-                            .Size("MEDIUM")
-                            .Offset(0, 0)
-                            .ShadowSize(1, 1)
-                            .Type("BITMAP"))
-                    .Size(200, 3)
-                    .Status(MapStatus.Off)
-                    .Units(MapUnits.Miles))
-            .AddLayer(layer =>
-                layer
-                    .Name("dataset_las_boundary")
-                    .ConnectionType(ConnectionType.PostGIS)
-                    .Connection("${CONNECTIONSTRINGS__POSTGRES__CATALOG}")
-                    .Processing("CLOSE_CONNECTION", "DEFER")
-                    .Status(MapStatus.On)
-                    .Metadata("wms_title", "dataset_las_boundary")
-                    .Metadata("wms_srs", "EPSG:4326")
-                    .Metadata("wms_enable_request", "*")
-                    .Metadata("gml_include_items", "all")
-                    .Metadata("gml_featureid", "fid")
-                    .Metadata("gml_types", "auto")
-                    .Metadata("ows_title", "dataset_las_boundary")
-                    .Metadata("ows_enable_request", "*")
-                    .Metadata("ows_include_items", "all")
-                    .Metadata("ows_geometry_type", "polygon")
-                    .Metadata("ows_geometries", "geometry")
-                    .Type(LayerType.Polygon)
-                    .Tolerance(10)
-                    .ToleranceUnits(MapUnits.Pixels)
-                    .Template("/etc/mapserver/styles/templates/file.html")
-                    .Units(MapUnits.Meters)
-                    .Data(
+            .WithName("WMS")
+            .WithSize(1224, 683)
+            .WithUnits(MapUnits.Meters)
+            .WithImageColor(System.Drawing.Color.White)
+            .WithFontSet("/etc/mapserver/styles/fonts/fonts.txt")
+            .WithSymbolSet("/etc/mapserver/styles/symbols/symbols.sym")
+            .WithImageType("png24")
+            .WithMaxSize(4096)
+            .WithWeb(() =>
+                Builders.WebBuilder.New()
+                    .WithFooterTemplate("/etc/mapserver/styles/templates/footer.html")
+                    .WithHeaderTemplate("/etc/mapserver/styles/templates/header.html")
+                    .WithImagePath("/ms4w/tmp/ms_tmp/")
+                    .WithImageUrl("/ms_tmp/")
+                    .WithMetadata(dictionary =>
+                    {
+                        dictionary.Add("wms_title", "AIMS Clearance Map");
+                        dictionary.Add("wms_onlineresource", "${PROXY_HOST_URL}/maps/wms");
+                        dictionary.Add("wms_srs", "EPSG:4326 EPSG:4269 EPSG:3978 EPSG:3857");
+                        dictionary.Add("wms_enable_request", "*");
+                        dictionary.Add("wms_feature_info_mime_type", "text/html");
+                        dictionary.Add("tile_map_edge_buffer", "8");
+                    }))
+            .WithConfig(dictionary => dictionary.Add("MS_ERRORFILE", "stderr"))
+            .WithOutputFormats(() =>
+                [
+                    Builders.OutputFormatBuilder.New()
+                        .WithName("png24")
+                        .WithMimeType(System.Net.Mime.MediaTypeNames.Image.Png)
+                        .WithDriver("AGG/PNG")
+                        .WithExtension("png")
+                        .WithImageMode("RGB")
+                        .WithTransparent(true)
+                        .Build()
+                ])
+            .WithProjection(() =>
+                Builders.ProjectionBuilder.New()
+                    .WithParameters(
+                    [
+                        "proj=longlat",
+                        "ellps=GRS80",
+                        "towgs84=0,0,0,0,0,0,0",
+                        "no_defs",
+                        ])
+                    .Build())
+            .WithLegend(() =>
+                Builders.LegendBuilder.New()
+                    .WithKeySize(20, 10)
+                    .WithKeySpacing(5, 5)
+                    .WithLabel(() =>
+                        Builders.LabelBuilder.New()
+                            .WithSize("MEDIUM")
+                            .WithOffset(0, 0)
+                            .WithShadowSize(1, 1)
+                            .WithType("BITMAP")
+                            .Build())
+                    .Build())
+            .WithQueryMap(() =>
+                Builders.QueryMapBuilder.New()
+                    .WithSize(-1, -1)
+                    .WithStatus(MapStatus.Off)
+                    .WithStyle(QueryMapStyle.Hilite)
+                    .Build())
+            .WithScaleBar(() =>
+                Builders.ScaleBarBuilder.New()
+                    .WithIntervals(4)
+                    .WithLabel(() =>
+                        Builders.LabelBuilder.New()
+                            .WithSize("MEDIUM")
+                            .WithOffset(0, 0)
+                            .WithShadowSize(1, 1)
+                            .WithType("BITMAP")
+                            .Build())
+                    .WithSize(200, 3)
+                    .WithStatus(MapStatus.Off)
+                    .WithUnits(MapUnits.Miles)
+                    .Build())
+            .WithLayers(() =>
+            [
+                Builders.LayerBuilder.New()
+                    .WithName("dataset_las_boundary")
+                    .WithConnectionType(ConnectionType.PostGIS)
+                    .WithConnection("${CONNECTIONSTRINGS__POSTGRES__CATALOG}")
+                    .WithProcessing(dictionary => dictionary.Add( "CLOSE_CONNECTION", "DEFER"))
+                    .WithStatus(MapStatus.On)
+                    .WithMetadata(dictionary =>
+                    {
+                        dictionary.Add("wms_title", "dataset_las_boundary");
+                        dictionary.Add("wms_srs", "EPSG:4326");
+                        dictionary.Add("wms_enable_request", "*");
+                        dictionary.Add("gml_include_items", "all");
+                        dictionary.Add("gml_featureid", "fid");
+                        dictionary.Add("gml_types", "auto");
+                        dictionary.Add("ows_title", "dataset_las_boundary");
+                        dictionary.Add("ows_enable_request", "*");
+                        dictionary.Add("ows_include_items", "all");
+                        dictionary.Add("ows_geometry_type", "polygon");
+                        dictionary.Add("ows_geometries", "geometry");
+                    })
+                    .WithType(LayerType.Polygon)
+                    .WithTolerance(10)
+                    .WithToleranceUnits(MapUnits.Pixels)
+                    .WithTemplate("/etc/mapserver/styles/templates/file.html")
+                    .WithUnits(MapUnits.Meters)
+                    .WithData(
                         """
                          geometry from (
                            SELECT
@@ -491,21 +532,25 @@ public class SerializerTests
                            WHERE data_type ILIKE 'DatasetLasFile'
                          ) as subquery using unique fid using srid=4326
                          """)
-                    .Filter("%org%")
-                    .FilterItem("organization")
-                    .Validation("org", "^[a-zA-Z\\-]+$")
-                    .Validation("default_org", "Development")
-                    .AddProjection(projection => projection.Epsg(4326))
-                    .AddClass(@class =>
-                        @class
-                            .AddStyle(style =>
-                                style
-                                    .Color(new Attribute("colour_rgb"))
-                                    .Opacity(50))
-                            .AddStyle(style =>
-                                style
-                                    .OutlineColor(new Attribute("colour_rgb"))
-                                    .Width(3))));
+                    .WithFilter("%org%")
+                    .WithFilterItem("organization")
+                    .WithValidation(dictionary =>
+                    {
+                        dictionary.Add("org", "^[a-zA-Z\\-]+$");
+                        dictionary.Add("default_org", "Development");
+                    })
+                    .WithProjection(Builders.ProjectionBuilder.New().WithEpsg(4326).Build)
+                    .WithClasses(() =>
+                    [
+                        Builders.ClassBuilder.New()
+                            .WithStyles(() =>
+                            [
+                                Builders.StyleBuilder.New().WithColor(new Attribute("colour_rgb")).WithOpacity(50),
+                                Builders.StyleBuilder.New().WithOutlineColor(new Attribute("colour_rgb")).WithWidth(3),
+                            ])
+                    ])
+             ])
+            .Build();
 
         var serialized = TestHelpers.NormalizeMapfile(Serialization.MapfileSerializer.Serialize(builder.Build()));
 

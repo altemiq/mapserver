@@ -6,138 +6,21 @@
 
 namespace Altemiq.IO.MapFile.Builders;
 
-using System.Collections.Generic;
-using System.Drawing;
-
 /// <summary>
-/// Fluent builder for <see cref="Style"/>.
+/// The <see cref="Style"/> <see cref="BuilderGenerator.Builder{T}"/>.
 /// </summary>
-/// <remarks>
-/// STYLE defines symbolization (colors, stroke width, hatch spacing, angle, etc.).
-/// </remarks>
-public sealed class StyleBuilder
+[BuilderGenerator.BuilderFor(typeof(Style), includeInternals: true)]
+public sealed partial class StyleBuilder
 {
-    private readonly Style style = new();
-
-    private StyleBuilder()
-    {
-    }
-
+    /// <summary>
+    /// Creates a new instance of <see cref="StyleBuilder"/>.
+    /// </summary>
+    /// <returns>The builder.</returns>
     public static StyleBuilder New() => new();
 
-    public static StyleBuilder From(Style s)
-    {
-        var b = New()
-            .Color(s.Color)
-            .OutlineColor(s.OutlineColor)
-            .Symbol(s.Symbol)
-            .Width(s.Width)
-            .Size(s.Size)
-            .Angle(s.Angle)
-            .Gap(s.Gap)
-            .Offset(s.Offset)
-            .Opacity(s.Opacity)
-            .GeomTransform(s.GeomTransform)
-            .MinScaleDenom(s.MinScaleDenom)
-            .MaxScaleDenom(s.MaxScaleDenom);
+    /// <summary>Gets or sets primary fill/line color; polygons use this as fill, lines as stroke.</summary>
+    public StyleBuilder WithColor(byte r, byte g, byte b) => this.WithColor(System.Drawing.Color.FromArgb(r, g, b));
 
-        if (s.Pattern.Count > 0)
-        {
-            b.Pattern(s.Pattern);
-        }
-
-        return b;
-    }
-
-    public StyleBuilder Color(byte r, byte g, byte b) => this.Color(System.Drawing.Color.FromArgb(r, g, b));
-
-    public StyleBuilder Color(ColorOrAttribute c)
-    {
-        this.style.Color = c;
-        return this;
-    }
-
-    public StyleBuilder OutlineColor(byte r, byte g, byte b) => this.OutlineColor(System.Drawing.Color.FromArgb(r, g, b));
-
-    public StyleBuilder OutlineColor(ColorOrAttribute c)
-    {
-        this.style.OutlineColor = c;
-        return this;
-    }
-
-    public StyleBuilder Symbol(string? name)
-    {
-        this.style.Symbol = name;
-        return this;
-    }
-
-    public StyleBuilder Width(double? px)
-    {
-        this.style.Width = px;
-        return this;
-    }
-
-    public StyleBuilder Size(double? value)
-    {
-        this.style.Size = value;
-        return this;
-    }
-
-    public StyleBuilder Angle(Angle value)
-    {
-        this.style.Angle = value;
-        return this;
-    }
-
-    /// <summary>Set a dash PATTERN. Values are rendered in layer SIZEUNITS.</summary>
-    /// <param name="dashes">The dash pattern.</param>
-    /// <returns>The builder for chaining.</returns>
-    public StyleBuilder Pattern(IEnumerable<double> dashes)
-    {
-        this.style.Pattern.Clear();
-        foreach (var d in dashes)
-        {
-            this.style.Pattern.Add(d);
-        }
-
-        return this;
-    }
-
-    public StyleBuilder Gap(double? value)
-    {
-        this.style.Gap = value;
-        return this;
-    }
-
-    public StyleBuilder Offset(Point? px)
-    {
-        this.style.Offset = px;
-        return this;
-    }
-
-    public StyleBuilder Opacity(int? pct)
-    {
-        this.style.Opacity = pct;
-        return this;
-    }
-
-    public StyleBuilder GeomTransform(string? expr)
-    {
-        this.style.GeomTransform = expr;
-        return this;
-    }
-
-    public StyleBuilder MinScaleDenom(double? v)
-    {
-        this.style.MinScaleDenom = v;
-        return this;
-    }
-
-    public StyleBuilder MaxScaleDenom(double? v)
-    {
-        this.style.MaxScaleDenom = v;
-        return this;
-    }
-
-    public Style Build() => this.style;
+    /// <summary>Gets or sets outline/stroke color for polygon fills or symbol outlines, if applicable.</summary>
+    public StyleBuilder WithOutlineColor(byte r, byte g, byte b) => this.WithOutlineColor(System.Drawing.Color.FromArgb(r, g, b));
 }

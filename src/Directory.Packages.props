@@ -1,14 +1,15 @@
 <Project>
-
+  
   <PropertyGroup>
     <ManagePackageVersionsCentrally>true</ManagePackageVersionsCentrally>
   </PropertyGroup>
 
-  <ItemGroup>
-    <PackageVersion Include="FluentValidation" Version="12.0.0" />
-    <PackageVersion Include="OneOf" Version="3.0.0" />
+  <ItemGroup Label="Generators">
+    <PackageVersion Include="BuilderGenerator" Version="3.1.0" />
+    <PackageVersion Include="CodeOfChaos.Unions.Generators" Version="6.5.0" />
+    <PackageVersion Include="SourceGenTemplates" Version="0.1.54" />
   </ItemGroup>
-
+  
   <ItemGroup>
     <GlobalPackageReference Include="Altemiq.DotNet.CodingStandard" Version="1.0.208" />
   </ItemGroup>

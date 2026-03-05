@@ -75,11 +75,11 @@ public sealed class Layer
     public MapUnits? SizeUnits { get; set; } // SIZEUNITS
 
     /// <summary>Gets list of PROCESSING directives (free-form key=value strings).</summary>
-    public IList<string> Processing { get; } = [];
+    public IList<string> Processing { get; internal init; } = [];
 
-    public IDictionary<string, string> Metadata { get; } = new Dictionary<string, string>(StringComparer.Ordinal);
+    public IDictionary<string, string> Metadata { get; internal init; } = new Dictionary<string, string>(StringComparer.Ordinal);
 
-    public IDictionary<string, string> Validation { get; } = new Dictionary<string, string>(StringComparer.Ordinal);
+    public IDictionary<string, string> Validation { get; internal init; } = new Dictionary<string, string>(StringComparer.Ordinal);
 
     public Projection? Projection { get; set; } // layer-level PROJECTION
 
@@ -95,13 +95,13 @@ public sealed class Layer
     public Leader? Leader { get; set; } // LEADER (for label leader lines)
 
     /// <summary>Gets feature-level JOINs (available after query).</summary>
-    public IList<Join> Joins { get; } = [];
+    public IList<Join> Joins { get; internal init; } = [];
 
     /// <summary>Gets or sets cOMPOSITE blending pipeline for the entire layer render.</summary>
     public Composite? Composite { get; set; }
 
     /// <summary>Gets child classes (feature selection and style sets).</summary>
-    public IList<Class> Classes { get; } = [];
+    public IList<Class> Classes { get; internal init; } = [];
 
     /// <summary>
     /// Gets or sets sensitivity for point queries (in <see cref="ToleranceUnits"/>). If layer type is

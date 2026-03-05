@@ -6,30 +6,44 @@ public class BuilderTests_TUnit
     public async Task MapBuilder_CreatesGraph_AsExpected()
     {
         var map = Builders.MapBuilder.New()
-            .Name("World")
-            .Size(800, 600)
-            .Extent(-137, 29, -53, 88)
-            .Units(MapUnits.DD)
-            .ImageType("png")
-            .AddProjection(b => b.Epsg(4326))
-            .UseWeb(w => w
-                .ImagePath("/var/www/tmp/")
-                .ImageUrl("/tmp/")
-                .Metadata("ows_enable_request", "*"))
-            .AddOutputFormat(of => of
-                .Name("png")
-                .Driver("AGG/PNG")
-                .MimeType(System.Net.Mime.MediaTypeNames.Image.Png)
-                .ImageMode("RGB"))
-            .AddLayer(l => l
-                .Name("admin_countries")
-                .Status(MapStatus.On)
-                .Type(LayerType.Polygon)
-                .Data("ne_10m_admin_0_countries")
-                .AddClass(cls => cls
-                    .Name("Countries")
-                    .AddStyle(s => s.Color(246, 241, 223))
-                    .AddStyle(s => s.OutlineColor(0, 0, 0).Width(1))))
+            .WithName("World")
+            .WithSize(800, 600)
+            .WithExtent(-137, 29, -53, 88)
+            .WithUnits(MapUnits.DD)
+            .WithImageType("png")
+            .WithProjection(() => Builders.ProjectionBuilder.New().WithEpsg(4326).Build())
+            .WithWeb(() => Builders.WebBuilder.New()
+                .WithImagePath("/var/www/tmp/")
+                .WithImageUrl("/tmp/")
+                .WithMetadata(() => new Dictionary<string, string>() { { "ows_enable_request", "*" } })
+                .Build())
+            .WithOutputFormats(() =>
+            [
+                Builders.OutputFormatBuilder.New()
+                    .WithName("png")
+                    .WithDriver("AGG/PNG")
+                    .WithMimeType(System.Net.Mime.MediaTypeNames.Image.Png)
+                    .WithImageMode("RGB")
+                    .Build()
+                ])
+            .WithLayers(
+            [
+                Builders.LayerBuilder.New()
+                .WithName("admin_countries")
+                .WithStatus(MapStatus.On)
+                .WithType(LayerType.Polygon)
+                .WithData("ne_10m_admin_0_countries")
+                .WithClasses(
+                [
+                    Builders.ClassBuilder.New()
+                        .WithName("Countries")
+                        .WithStyles(() =>
+                        [
+                            Builders.StyleBuilder.New().WithColor(246, 241, 223),
+                            Builders.StyleBuilder.New().WithOutlineColor(0, 0, 0).WithWidth(1)
+                            ])
+                    ])
+                ])
             .Build();
 
         using (Assert.Multiple())
@@ -46,15 +60,30 @@ public class BuilderTests_TUnit
     public async Task Builder_ThenSerializer_ProducesValidMapfile()
     {
         var map = Builders.MapBuilder.New()
-            .Name("MapFromBuilder")
-            .Size(256, 256)
-            .AddProjection(p => p.Epsg(3857))
-            .AddLayer(l => l
-                .Name("states")
-                .Status(MapStatus.On)
-                .Type(LayerType.Line)
-                .Data("states_line")
-                .AddClass(c => c.AddStyle(s => s.Color(System.Drawing.Color.Black).Width(1))))
+            .WithName("MapFromBuilder")
+            .WithSize(256, 256)
+            .WithProjection(() => Builders.ProjectionBuilder.New().WithEpsg(3857).Build())
+            .WithLayers(() =>
+            [
+                Builders.LayerBuilder
+                    .New()
+                    .WithName("states")
+                    .WithStatus(MapStatus.On)
+                    .WithType(LayerType.Line)
+                    .WithData("states_line")
+                    .WithClasses(() =>
+                    [
+                        Builders.ClassBuilder
+                            .New()
+                            .WithStyles(() =>
+                            [
+                                Builders.StyleBuilder.New()
+                                    .WithColor(System.Drawing.Color.Black)
+                                    .WithWidth(1)
+                                    ]
+                            )
+                        ])
+                    ])
             .Build();
 
         var n = TestHelpers.NormalizeMapfile(Serialization.MapfileSerializer.Serialize(map));

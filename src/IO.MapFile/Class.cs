@@ -58,7 +58,9 @@ public sealed class Class
     /// </summary>
     public double? MaxGeoWidth { get; set; }
 
-    /// <summary>Gets or sets if true, acts like SLD ElseFilter—applies only if no previous classes matched.</summary>
+    /// <summary>
+    /// Gets or sets if true, acts like SLD ElseFilter—applies only if no previous classes matched.
+    /// </summary>
     public bool? Fallback { get; set; }
 
     /// <summary>
@@ -68,15 +70,17 @@ public sealed class Class
     /// </summary>
     public int? DebugLevel { get; set; }
 
-    /// <summary>Gets style(s) used to draw features of this class.</summary>
-    public IList<Style> Styles { get; } = [];
+    /// <summary>
+    /// Gets style(s) used to draw features of this class.
+    /// </summary>
+    public IList<Style> Styles { get; internal init; } = [];
 
     /// <summary>
     /// Gets the style list.
     /// A CLASS can contain multiple STYLE objects that are overlaid/stacked to form complex symbols.
     /// Use STYLEs (not legacy color/size keys).
     /// </summary>
-    public IList<Label> Labels { get; } = [];
+    public IList<Label> Labels { get; internal init; } = [];
 
-    public IDictionary<string, string> Validation { get; } = new Dictionary<string, string>(StringComparer.Ordinal);
+    public IDictionary<string, string> Validation { get; internal init; } = new Dictionary<string, string>(StringComparer.Ordinal);
 }

@@ -7,28 +7,29 @@
 namespace Altemiq.IO.MapFile;
 
 /// <summary>
-/// Legend alignment inside its own image.
+/// Horizontal alignment options for objects rendered inside their own image
+/// (e.g., LEGEND, SCALEBAR), used when the container supports alignment.
 /// </summary>
-[Flags]
+[System.Flags]
 public enum HorizontalAlign
 {
     /// <summary>
-    /// None. Invalid.
+    /// No alignment specified (invalid for actual placement).
     /// </summary>
     None = 0,
 
     /// <summary>
-    /// Left alignment.
+    /// Align content to the left edge.
     /// </summary>
     Left = 1 << 16,
 
     /// <summary>
-    /// Horizontal alignment.
+    /// Align content to the horizontal center.
     /// </summary>
     Center = 1 << 17,
 
     /// <summary>
-    /// Right alignment.
+    /// Align content to the right edge.
     /// </summary>
     Right = 1 << 18,
 }

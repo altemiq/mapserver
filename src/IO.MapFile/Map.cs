@@ -6,97 +6,94 @@
 
 namespace Altemiq.IO.MapFile;
 
-using System.Drawing;
-
-/// <summary>
-/// The root of a MapServer mapfile.
+/// <summary>Root <c>MAP</c> object: global state (extent, size, DPI), defaults (e.g., <c>IMAGETYPE</c>),
+/// child objects (LAYERs, OUTPUTFORMATs, PROJECTION, WEB, LEGEND/SCALEBAR, etc.).
 /// </summary>
-/// <remarks>
-/// See Mapfile index &amp; MAP object overview.
-/// Contains global state, default output type, child objects (layers, outputs, web, projection, legend/scalebar, etc.).
-/// </remarks>
 public sealed class Map
 {
-    /// <summary>Gets or sets unique map name (often used in CGI requests).</summary>
+    /// <summary>Gets or sets the unique map name (<c>NAME</c>).</summary>
     public string? Name { get; set; }
 
-    /// <summary>Gets or sets on/Off; rarely needed at MAP level, but included for completeness.</summary>
+    /// <summary>Gets or sets the map drawing status (<c>STATUS</c>).</summary>
     public MapStatus Status { get; set; }
 
-    /// <summary>Gets or sets map image size in pixels (WIDTH, HEIGHT).</summary>
+    /// <summary>Gets or sets the map image size in pixels (<c>SIZE</c>).</summary>
     public Size Size { get; set; }
 
-    /// <summary>Gets or sets maximum allowed WIDTH/HEIGHT for requests (MAXSIZE in pixels).</summary>
+    /// <summary>Gets or sets the maximum allowed WIDTH/HEIGHT in pixels for requests (<c>MAXSIZE</c>).</summary>
     public int? MaxSize { get; set; }
 
-    /// <summary>Gets or sets initial display extent (minx, miny, maxx, maxy).</summary>
+    /// <summary>Gets or sets the initial display/map extent (<c>EXTENT</c>).</summary>
     public BoundingBox? Extent { get; set; }
 
-    /// <summary>Gets or sets map coordinate units (UNITS).</summary>
+    /// <summary>Gets or sets the coordinate units for the map (<c>UNITS</c>).</summary>
     public MapUnits? Units { get; set; }
 
     /// <summary>
-    /// Gets or sets the output DPI used for scale computations. Default 72; valid range [10,1000].
+    /// Gets or sets the output DPI used for scale computations (<c>RESOLUTION</c>).
     /// </summary>
+    [DefaultValue(72)]
     public int Resolution { get; set; } = 72;
 
     /// <summary>
-    /// Gets or sets the reference DPI used for symbology scaling (the map “looks” the same when
-    /// <see cref="Resolution"/> changes; scale factor = <c>Resolution/DefResolution</c>).
-    /// Default 72; valid range [10,1000].
+    /// Gets or sets the reference DPI used for symbology scaling (<c>DEFRESOLUTION</c>).
+    /// Scale factor is <c>Resolution / DefResolution</c>.
     /// </summary>
+    [DefaultValue(72)]
     public int DefResolution { get; set; } = 72;
 
     /// <summary>
-    /// Gets or sets default image type (IMAGETYPE) – references an OUTPUTFORMAT NAME declared here.
+    /// Gets or sets the default image type (<c>IMAGETYPE</c>)—must match an <see cref="OutputFormat.Name"/>.
     /// </summary>
     public string? ImageType { get; set; }
 
-    /// <summary>Gets or sets background/fill color for the map image (IMAGECOLOR).</summary>
+    /// <summary>Gets or sets the background color (<c>IMAGECOLOR</c>).</summary>
     public Color? ImageColor { get; set; }
 
-    /// <summary>Gets or sets optional global background (can be used by some renderers).</summary>
+    /// <summary>Gets or sets the optional global background color.</summary>
     public Color? BackgroundColor { get; set; }
 
-    /// <summary>Gets or sets symbol set file path (if using external symbol sets) or inline SYMBOL blocks.</summary>
+    /// <summary>Gets or sets the symbol set file path (<c>SYMBOLSET</c>).</summary>
     public string? SymbolSet { get; set; }
 
-    /// <summary>Gets or sets fontset file path for TrueType fonts.</summary>
+    /// <summary>Gets or sets the fontset file path for TrueType fonts (<c>FONTSET</c>).</summary>
     public string? FontSet { get; set; }
 
-    /// <summary>Gets or sets path used to resolve relative DATA references within layers (SHAPEPATH).</summary>
+    /// <summary>Gets or sets the root path used to resolve relative layer <c>DATA</c> paths (<c>SHAPEPATH</c>).</summary>
     public string? ShapePath { get; set; }
 
-    /// <summary>Gets or sets global debugging level; 0..5 in modern MapServer (DEBUG).</summary>
+    /// <summary>Gets or sets the global debug level 0..5 (<c>DEBUG</c>).</summary>
     public int? DebugLevel { get; set; }
 
-    /// <summary>Gets arbitrary environment and system configuration (CONFIG entries).</summary>
-    public IDictionary<string, string> Config { get; } = new Dictionary<string, string>(StringComparer.Ordinal);
+    /// <summary>Gets the environment and system configuration (<c>CONFIG</c> entries).</summary>
+    public IDictionary<string, string> Config { get; } =
+        new Dictionary<string, string>(System.StringComparer.Ordinal);
 
-    /// <summary>Gets free-form metadata (METADATA) available to templates and OGC services.</summary>
-    public IDictionary<string, string> Metadata { get; } = new Dictionary<string, string>(StringComparer.Ordinal);
+    /// <summary>Gets the free-form metadata (<c>METADATA</c>) available to templates and OGC services.</summary>
+    public IDictionary<string, string> Metadata { get; } =
+        new Dictionary<string, string>(System.StringComparer.Ordinal);
 
-    /// <summary>Gets or sets global PROJECTION for output.</summary>
+    /// <summary>Gets or sets the map-level projection (<c>PROJECTION</c>).</summary>
     public Projection? Projection { get; set; }
 
-    /// <summary>Gets or sets wEB block (CGI paths, formats, templates, etc.).</summary>
+    /// <summary>Gets or sets the WEB block (CGI paths, formats, templates, etc.).</summary>
     public Web? Web { get; set; }
 
-    /// <summary>Gets declared OUTPUTFORMATs; referenced by <see cref="ImageType"/>.</summary>
+    /// <summary>Gets the declared output formats (<c>OUTPUTFORMAT</c> blocks).</summary>
     public IList<OutputFormat> OutputFormats { get; } = [];
 
-    /// <summary>Gets or sets legend block.</summary>
+    /// <summary>Gets or sets the legend block (<c>LEGEND</c>).</summary>
     public Legend? Legend { get; set; }
 
-    /// <summary>Gets or sets scalebar block.</summary>
+    /// <summary>Gets or sets the scalebar block (<c>SCALEBAR</c>).</summary>
     public ScaleBar? ScaleBar { get; set; }
 
-    /// <summary>Gets or sets reference map configuration.</summary>
+    /// <summary>Gets or sets the reference (overview) map configuration (<c>REFERENCE</c>).</summary>
     public Reference? Reference { get; set; }
 
-    /// <summary>Gets or sets queryMap configuration.</summary>
+    /// <summary>Gets or sets the query map configuration (<c>QUERYMAP</c>).</summary>
     public QueryMap? QueryMap { get; set; }
 
-    /// <summary>Gets child layers, evaluated top-to-bottom.</summary>
+    /// <summary>Gets the child layers rendered top-to-bottom (<c>LAYER</c>).</summary>
     public IList<Layer> Layers { get; } = [];
 }

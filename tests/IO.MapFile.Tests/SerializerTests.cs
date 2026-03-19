@@ -574,7 +574,6 @@ public class SerializerTests
                    END # METADATA
                    TYPE POLYGON
                    TOLERANCE 10
-                   TOLERANCEUNITS PIXELS
                    TEMPLATE "/etc/mapserver/styles/templates/file.html"
                    UNITS METERS
                    DATA "geometry from (

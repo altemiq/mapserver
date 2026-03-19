@@ -7,11 +7,22 @@
 namespace Altemiq.IO.MapFile;
 
 /// <summary>
-/// QueryMap style: how to render selected vs non-selected features.
+/// Styles used by QUERYMAP to render selected or highlighted query results.
 /// </summary>
 public enum QueryMapStyle
 {
+    /// <summary>
+    /// Render the query map normally (<c>NORMAL</c>).
+    /// </summary>
     Normal,
+
+    /// <summary>
+    /// Highlight the selected features using the configured highlight color (<c>HILITE</c>).
+    /// </summary>
     Hilite,
+
+    /// <summary>
+    /// Render only the selected features (<c>SELECTED</c>).
+    /// </summary>
     Selected,
 }

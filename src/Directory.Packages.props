@@ -5,7 +5,7 @@
   </PropertyGroup>
 
   <ItemGroup Label="Generators">
-    <PackageVersion Include="Altemiq.Patterns.Builder.Generator" Version="0.1.0-beta.19" />
+    <PackageVersion Include="Altemiq.Patterns.Builder.Generator" Version="0.1.0-beta.20" />
     <PackageVersion Include="CodeOfChaos.Unions.Generators" Version="6.5.0" />
   </ItemGroup>
   

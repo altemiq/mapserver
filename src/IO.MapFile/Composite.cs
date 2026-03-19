@@ -7,16 +7,24 @@
 namespace Altemiq.IO.MapFile;
 
 /// <summary>
-/// COMPOSITE (layer-level temporary rendering &amp; blending into final image).
+/// COMPOSITE settings for a LAYER: render into a temporary image and
+/// merge onto the final map image using an operator, optional filters,
+/// and optional opacity.
 /// </summary>
 public sealed class Composite
 {
-    /// <summary>Gets or sets name of the compositing operator (e.g., "src-over", "multiply", "screen", etc.).</summary>
+    /// <summary>
+    /// Gets or sets the compositing operator (e.g., <c>src-over</c>, <c>multiply</c>, <c>screen</c>).
+    /// </summary>
     public string? CompOp { get; set; }
 
-    /// <summary>Gets one or more compositing filters (e.g., "blur(4)", "translate(2,2)", "grayscale()").</summary>
+    /// <summary>
+    /// Gets the list of compositing filters to apply (e.g., <c>blur(4)</c>, <c>translate(2,2)</c>, <c>grayscale()</c>).
+    /// </summary>
     public IList<string> CompFilters { get; } = [];
 
-    /// <summary>Gets or sets opacity (0..100), if applicable to the operator.</summary>
+    /// <summary>
+    /// Gets or sets the opacity (0..100) applied during compositing, if applicable.
+    /// </summary>
     public int? Opacity { get; set; }
 }

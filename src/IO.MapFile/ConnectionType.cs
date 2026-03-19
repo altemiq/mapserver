@@ -7,82 +7,82 @@
 namespace Altemiq.IO.MapFile;
 
 /// <summary>
-/// LAYER CONNECTIONTYPE values (data provider / pipeline).
+/// LAYER <c>CONNECTIONTYPE</c> values (data provider / pipeline).
 /// </summary>
 public enum ConnectionType
 {
     /// <summary>
-    /// Local connection type.
+    /// Local datasource (<c>local</c>).
     /// </summary>
     Local,
 
     /// <summary>
-    /// OGC connection type.
+    /// OGR driver (<c>ogr</c>).
     /// </summary>
     Ogr,
 
     /// <summary>
-    /// Oracle spatial connection type.
+    /// Oracle Spatial (<c>oraclespatial</c>).
     /// </summary>
     OracleSpatial,
 
     /// <summary>
-    /// Plugin connection type.
+    /// Plugin (<c>plugin</c>).
     /// </summary>
     Plugin,
 
     /// <summary>
-    /// PostGIS connection type.
+    /// PostGIS (<c>postgis</c>).
     /// </summary>
     PostGIS,
 
     /// <summary>
-    /// SDE connection type.
+    /// ESRI SDE (<c>sde</c>). Native SDE driver was removed in MapServer 7.0; SDE access is typically via OGR.
     /// </summary>
     Sde,
 
     /// <summary>
-    /// Union connection type.
+    /// Union layer (<c>union</c>).
     /// </summary>
     Union,
 
     /// <summary>
-    /// Raster connection type.
+    /// Raster via GDAL (<c>raster</c>).
     /// </summary>
     Raster,
 
     /// <summary>
-    /// Raster label connection type.
+    /// Raster label (<c>rasterlabel</c>).
     /// </summary>
     RasterLabel,
 
     /// <summary>
-    /// UV raster connection type.
+    /// UV raster (<c>uvraster</c>).
     /// </summary>
     UvRaster,
 
     /// <summary>
-    /// WFS connection type.
+    /// OGC WFS client (<c>wfs</c>).
     /// </summary>
     Wfs,
 
     /// <summary>
-    /// WMS connection type.
+    /// OGC WMS client (<c>wms</c>).
     /// </summary>
     Wms,
 
     /// <summary>
-    /// IDW connection type.
+    /// Inverse Distance Weighted interpolator (<c>idw</c>).
     /// </summary>
     Idw,
 
     /// <summary>
-    /// Contour connection type.
+    /// Contour generator (<c>contour</c>).
     /// </summary>
     Contour,
 
     /// <summary>
-    /// Kernel density connection type.
+    /// Kernel density (dynamic heatmap) (<c>kerneldensity</c>).
     /// </summary>
     KernelDensity,
 }

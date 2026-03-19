@@ -7,37 +7,41 @@
 namespace Altemiq.IO.MapFile;
 
 /// <summary>
-/// Enumeration of layer geometry types.
+/// Supported geometry types for a LAYER (<c>TYPE</c>).
 /// </summary>
+/// <remarks>
+/// These values map directly to MapServer’s <c>TYPE</c> keyword:
+/// <c>POINT</c>, <c>LINE</c>, <c>POLYGON</c>, <c>RASTER</c>, <c>ANNOTATION</c>, <c>CIRCLE</c>.
+/// </remarks>
 public enum LayerType
 {
     /// <summary>
-    /// Point layer type.
+    /// Point or multipoint geometry (<c>POINT</c>).
     /// </summary>
     Point,
 
     /// <summary>
-    /// Line layer type.
+    /// Line or multiline geometry (<c>LINE</c>).
     /// </summary>
     Line,
 
     /// <summary>
-    /// Polygon layer type.
+    /// Polygon or multipolygon geometry (<c>POLYGON</c>).
     /// </summary>
     Polygon,
 
     /// <summary>
-    /// Raster layer type.
+    /// Raster imagery (<c>RASTER</c>).
     /// </summary>
     Raster,
 
     /// <summary>
-    /// Annotation layer type.
+    /// Annotation / label‑only layers (<c>ANNOTATION</c>).
     /// </summary>
     Annotation,
 
     /// <summary>
-    /// Circle layer type.
+    /// Circle geometry (<c>CIRCLE</c>).
     /// </summary>
     Circle,
 }

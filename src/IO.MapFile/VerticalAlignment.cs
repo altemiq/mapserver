@@ -7,28 +7,29 @@
 namespace Altemiq.IO.MapFile;
 
 /// <summary>
-/// Legend alignment inside its own image.
+/// Vertical alignment options for objects rendered inside their own image
+/// (e.g., LEGEND, SCALEBAR), used when the container supports alignment.
 /// </summary>
-[Flags]
+[System.Flags]
 public enum VerticalAlignment
 {
     /// <summary>
-    /// None. Invalid.
+    /// No alignment specified (invalid for actual placement).
     /// </summary>
     None = 0,
 
     /// <summary>
-    /// Lower alignment.
+    /// Align content to the bottom edge.
     /// </summary>
     Lower = 1 << 0,
 
     /// <summary>
-    /// Center alignment.
+    /// Align content to the vertical center.
     /// </summary>
     Center = 1 << 1,
 
     /// <summary>
-    /// Upper alignment.
+    /// Align content to the top edge.
     /// </summary>
     Upper = 1 << 2,
 }

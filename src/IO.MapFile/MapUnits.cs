@@ -7,45 +7,48 @@
 namespace Altemiq.IO.MapFile;
 
 /// <summary>
-/// Map distance or tolerance units.
+/// Units used for distances, sizes, tolerances, scale computations, and other
+/// measurement‑based parameters in MapServer.
 /// </summary>
 public enum MapUnits
 {
     /// <summary>
-    /// Pixel units.
+    /// Pixel units (<c>PIXELS</c>).
     /// </summary>
     Pixels,
 
     /// <summary>
-    /// Feet units.
+    /// Feet (<c>FEET</c>).
     /// </summary>
     Feet,
 
     /// <summary>
-    /// Inches units.
+    /// Inches (<c>INCHES</c>).
     /// </summary>
     Inches,
 
     /// <summary>
-    /// Kilometer units.
+    /// Kilometers (<c>KILOMETERS</c>).
     /// </summary>
     Kilometers,
 
     /// <summary>
-    /// Meter units.
+    /// Meters (<c>METERS</c>).
     /// </summary>
     Meters,
 
     /// <summary>
-    /// Mile units.
+    /// Miles (<c>MILES</c>).
     /// </summary>
     Miles,
 
     /// <summary>
-    /// Nautical mile units.
+    /// Nautical miles (<c>NAUTICALMILES</c>).
     /// </summary>
     NauticalMiles,
 
-    /// <summary>Decimal degrees.</summary>
+    /// <summary>
+    /// Decimal degrees (<c>DD</c>).
+    /// </summary>
     DD,
 }

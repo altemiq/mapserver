@@ -6,36 +6,76 @@
 
 namespace Altemiq.IO.MapFile;
 
-using System.Drawing;
-
 /// <summary>
-/// SCALEBAR block – scalebar rendering and placement.
+/// SCALEBAR block — scalebar rendering, layout, and placement.
 /// </summary>
 public sealed class ScaleBar
 {
-    public MapStatus Status { get; set; } = MapStatus.Off;           // on|off|embed
+    /// <summary>
+    /// Gets or sets whether the scalebar is rendered (<c>STATUS</c>).
+    /// </summary>
+    [DefaultValue(MapStatus.Off)]
+    public MapStatus Status { get; set; } = MapStatus.Off;
 
-    public Color? ImageColor { get; set; } // IMAGECOLOR (background)
+    /// <summary>
+    /// Gets or sets the background image color for the scalebar (<c>IMAGECOLOR</c>).
+    /// </summary>
+    public Color? ImageColor { get; set; }
 
-    public Color? BackColor { get; set; } // BACKGROUNDCOLOR
+    /// <summary>
+    /// Gets or sets the background color (<c>BACKGROUNDCOLOR</c>).
+    /// </summary>
+    public Color? BackColor { get; set; }
 
-    public Color? Color { get; set; } // COLOR (bar color)
+    /// <summary>
+    /// Gets or sets the bar color (<c>COLOR</c>).
+    /// </summary>
+    public Color? Color { get; set; }
 
-    public Color? OutlineColor { get; set; } // OUTLINECOLOR (if supported)
+    /// <summary>
+    /// Gets or sets the outline color for the bar segments (<c>OUTLINECOLOR</c>).
+    /// </summary>
+    public Color? OutlineColor { get; set; }
 
-    public Size? Size { get; set; } // SIZE (w x h, px)
+    /// <summary>
+    /// Gets or sets the scalebar size (width × height, pixels) (<c>SIZE</c>).
+    /// </summary>
+    public Size? Size { get; set; }
 
-    public CornerPosition? Position { get; set; } // POSITION (when embedded)
+    /// <summary>
+    /// Gets or sets the embedded position on the map (<c>POSITION</c>) when <see cref="Status"/> is <c>EMBED</c>.
+    /// </summary>
+    public CornerPosition? Position { get; set; }
 
-    public HorizontalAlign? Align { get; set; } // ALIGN within image
+    /// <summary>
+    /// Gets or sets the horizontal alignment within the image (<c>ALIGN</c>).
+    /// </summary>
+    public HorizontalAlign? Align { get; set; }
 
-    public int? Intervals { get; set; } // INTERVALS (default 4)
+    /// <summary>
+    /// Gets or sets the number of intervals/segments to display (<c>INTERVALS</c>).
+    /// </summary>
+    [DefaultValue(4)]
+    public int? Intervals { get; set; } = 4;
 
-    public Point? Offset { get; set; } // OFFSET (x,y) from corner
+    /// <summary>
+    /// Gets or sets the pixel offset from the corner when embedded (<c>OFFSET</c> X,Y).
+    /// </summary>
+    public Point? Offset { get; set; }
 
-    public MapUnits? Units { get; set; } // UNITS (feet, meters, miles, etc.)
+    /// <summary>
+    /// Gets or sets the distance units for labeling (<c>UNITS</c>), e.g., <c>meters</c>, <c>miles</c>.
+    /// </summary>
+    public MapUnits? Units { get; set; }
 
-    public Label? Label { get; set; } // LABEL block
+    /// <summary>
+    /// Gets or sets an optional nested LABEL block for scalebar text.
+    /// </summary>
+    public Label? Label { get; set; }
 
-    public bool? Transparent { get; set; } // override transparency
+    /// <summary>
+    /// Gets or sets whether the scalebar background is transparent (<c>TRANSPARENT</c>).
+    /// If not set, the OUTPUTFORMAT transparency settings apply.
+    /// </summary>
+    public bool? Transparent { get; set; }
 }

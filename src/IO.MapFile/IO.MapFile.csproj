@@ -30,6 +30,8 @@
     <Using Include="CodeOfChaos.Unions" />
     <Using Include="$(RootNamespace).Unions" />
     <Using Include="$(RootNamespace).Types" />
+    <Using Include="System.ComponentModel" />
+    <Using Include="System.Drawing" />
   </ItemGroup>
 
 </Project>

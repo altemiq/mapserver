@@ -7,37 +7,37 @@
 namespace Altemiq.IO.MapFile;
 
 /// <summary>
-/// LEGEND/SCALEBAR position around the map canvas (ul, uc, ur, ll, lc, lr).
+/// Positions for placing legend/scalebar around the map canvas.
 /// </summary>
 public enum CornerPosition
 {
     /// <summary>
-    /// Upper-left.
+    /// Upper left.
     /// </summary>
     UL,
 
     /// <summary>
-    /// Upper-center.
+    /// Upper center.
     /// </summary>
     UC,
 
     /// <summary>
-    /// Upper-right.
+    /// Upper right.
     /// </summary>
     UR,
 
     /// <summary>
-    /// lower-left.
+    /// Lower left.
     /// </summary>
     LL,
 
     /// <summary>
-    /// lower-center.
+    /// Lower center.
     /// </summary>
     LC,
 
     /// <summary>
-    /// lower-right.
+    /// Lower right.
     /// </summary>
     LR,
 }

@@ -194,10 +194,10 @@ public static class MapfileSerializer
             }
         }
 
-        public void Prop<T>(string name, T? value, Func<T, string?> serialize)
+        public void Prop<T>(string name, T? value, Func<T, string?> serialize, T defaultValue = default)
             where T : struct
         {
-            if (value is { } v && serialize(v) is { } serialized)
+            if (value is { } v && !v.Equals(defaultValue) && serialize(v) is { } serialized)
             {
                 this.Line(default, $"{name} {serialized}");
             }
@@ -214,7 +214,7 @@ public static class MapfileSerializer
 
         public void Prop(string name, Color? value) => this.Prop(name, value, color => MapfileSerializer.Serialize(color, this.options));
 
-        public void Prop(string name, Point? value) => this.Prop(name, value, Serialize);
+        public void Prop(string name, Point? value, Point defaultValue = default) => this.Prop(name, value, Serialize, defaultValue);
 
         public void Prop(string name, Size value) => this.Prop(name, value, Serialize);
 
@@ -250,9 +250,9 @@ public static class MapfileSerializer
         }
 #pragma warning restore IDE0060, RCS1163, S1172
 
-        public void PropQuoted(string name, string? value)
+        public void PropQuoted(string name, string? value, string? defaultValue = default)
         {
-            if (!string.IsNullOrWhiteSpace(value))
+            if (!string.IsNullOrWhiteSpace(value) && !string.Equals(value, defaultValue, StringComparison.Ordinal))
             {
                 this.Line(default, $"{name} {DoubleQuote(value)}");
             }
@@ -335,8 +335,8 @@ public static class MapfileSerializer
                 "WEB",
                 () =>
                 {
-                    this.PropQuoted("BROWSEFORMAT", web.BrowseFormat);
-                    this.PropQuoted("LEGENDFORMAT", web.LegendFormat);
+                    this.PropQuoted("BROWSEFORMAT", web.BrowseFormat, "text/html");
+                    this.PropQuoted("LEGENDFORMAT", web.LegendFormat, "text/html");
                     this.PropQuoted("EMPTY", web.EmptyUrl);
                     this.PropQuoted("ERROR", web.ErrorUrl);
                     this.PropQuoted("FOOTER", web.FooterTemplate);
@@ -471,7 +471,7 @@ public static class MapfileSerializer
                     this.Prop("TYPE", layer.Type, Serialize);
 
                     this.Prop("TOLERANCE", layer.Tolerance);
-                    this.Prop("TOLERANCEUNITS", layer.ToleranceUnits, MapfileSerializer.Serialize);
+                    this.Prop("TOLERANCEUNITS", layer.ToleranceUnits, MapfileSerializer.Serialize, MapUnits.Pixels);
                     this.PropQuoted("HEADER", layer.Header);
                     this.PropQuoted("FOOTER", layer.Footer);
                     this.PropQuoted("TEMPLATE", layer.Template);
@@ -594,7 +594,7 @@ public static class MapfileSerializer
                 () =>
                 {
                     this.Prop("SIZE", label.Size);
-                    this.Prop("OFFSET", label.Offset);
+                    this.Prop("OFFSET", label.Offset, new Point(int.MinValue, int.MinValue));
                     this.Prop("SHADOWSIZE", label.ShadowSize);
                     this.Prop("TYPE", label.Type);
                     this.Prop("COLOR", label.Color);

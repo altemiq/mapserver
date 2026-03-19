@@ -7,58 +7,67 @@
 namespace Altemiq.IO.MapFile;
 
 /// <summary>
-/// Label positioning relative to the feature, including AUTO.
-/// (Consolidates common positions used in docs &amp; tutorial.)
+/// Label placement relative to the feature, matching MapServer’s <c>POSITION</c>
+/// keyword (e.g., <c>UR</c>, <c>LC</c>, <c>AUTO</c>).
 /// </summary>
+/// <remarks>
+/// All two‑letter codes correspond exactly to MapServer’s label placement grid:
+/// <code>
+///     UL  UC  UR
+///     CL  CC  CR
+///     LL  LC  LR
+/// </code>
+/// <c>AUTO</c> delegates selection to MapServer.
+/// </remarks>
 public enum LabelPosition
 {
     /// <summary>
-    /// Auto.
+    /// Automatic placement (<c>AUTO</c>).
     /// </summary>
     Auto,
 
     /// <summary>
-    /// center-center.
+    /// Center‑center (<c>CC</c>).
     /// </summary>
     CC,
 
     /// <summary>
-    /// upper-center.
+    /// Upper‑center (<c>UC</c>).
     /// </summary>
     UC,
 
     /// <summary>
-    /// lower-center.
+    /// Lower‑center (<c>LC</c>).
     /// </summary>
     LC,
 
     /// <summary>
-    /// center-left.
+    /// Center‑left (<c>CL</c>).
     /// </summary>
     CL,
 
     /// <summary>
-    /// center-right.
+    /// Center‑right (<c>CR</c>).
     /// </summary>
     CR,
 
     /// <summary>
-    /// upper-left.
+    /// Upper‑left (<c>UL</c>).
     /// </summary>
     UL,
 
     /// <summary>
-    /// upper-right.
+    /// Upper‑right (<c>UR</c>).
     /// </summary>
     UR,
 
     /// <summary>
-    /// lower-left.
+    /// Lower‑left (<c>LL</c>).
     /// </summary>
     LL,
 
     /// <summary>
-    /// lower-right.
+    /// Lower‑right (<c>LR</c>).
     /// </summary>
     LR,
 }

@@ -7,27 +7,27 @@
 namespace Altemiq.IO.MapFile;
 
 /// <summary>
-/// GRID label formats.
+/// Supported label formats for the <see cref="Grid"/> graticule labels.
 /// </summary>
 public enum GridLabelFormat
 {
     /// <summary>
-    /// Degrees.
+    /// Degrees (DD).
     /// </summary>
     DD,
 
     /// <summary>
-    /// Degrees and minutes.
+    /// Degrees and minutes (DDMM).
     /// </summary>
     DDMM,
 
     /// <summary>
-    /// Degrees, minutes, seconds.
+    /// Degrees, minutes, seconds (DDMMSS).
     /// </summary>
     DDMMSS,
 
     /// <summary>
-    /// Use a C-style format string (see <see cref="Grid.LabelFormatCustom"/>).
+    /// Custom format using a C‑style printf pattern (see <see cref="Grid.LabelFormatCustom"/>).
     /// </summary>
     Custom,
 }

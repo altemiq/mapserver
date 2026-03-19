@@ -7,21 +7,21 @@
 namespace Altemiq.IO.MapFile;
 
 /// <summary>
-/// PROJECTION – declares the coordinate system using PROJ parameters (prefer EPSG when available).
+/// PROJECTION — declares the coordinate system using PROJ parameters or EPSG codes.
 /// </summary>
 /// <remarks>
-/// You can use EPSG via "init=epsg:XXXX" or inline PROJ strings. Starting with MapServer 8 and PROJ≥6,
-/// EPSG is recommended for higher accuracy reprojection.
+/// Prefer EPSG codes (e.g., <c>init=epsg:4326</c>) when available; inline PROJ strings are also supported.
 /// </remarks>
 public sealed class Projection
 {
     /// <summary>
-    /// Gets or sets set true to use PROJECTION AUTO (rare). Leave null for explicit params/EPSG.
+    /// Gets or sets a value indicating whether to use PROJECTION AUTO (rare).
+    /// Leave <see langword="null"/> for explicit EPSG/PROJ parameter definitions.
     /// </summary>
     public bool? Auto { get; set; }
 
     /// <summary>
-    /// Gets pROJ parameter lines as declared (e.g., "init=epsg:4326" or "proj=utm", ...).
+    /// Gets the PROJ parameter lines as declared (e.g., <c>"init=epsg:4326"</c>, <c>"proj=utm"</c> …).
     /// </summary>
     public IList<string> Parameters { get; } = [];
 }

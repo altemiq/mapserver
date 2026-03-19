@@ -32,7 +32,7 @@ public sealed class Web
 
     public string? MaxTemplate { get; set; } // MAXTEMPLATE
 
-    public IDictionary<string, string> Metadata { get; internal init; } = new Dictionary<string, string>(StringComparer.Ordinal);
+    public IDictionary<string, string> Metadata { get; } = new Dictionary<string, string>(StringComparer.Ordinal);
 
-    public IDictionary<string, string> Validation { get; internal init; } = new Dictionary<string, string>(StringComparer.Ordinal);
+    public IDictionary<string, string> Validation { get; } = new Dictionary<string, string>(StringComparer.Ordinal);
 }

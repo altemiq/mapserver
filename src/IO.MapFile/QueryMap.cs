@@ -8,8 +8,6 @@ namespace Altemiq.IO.MapFile;
 
 using System.Drawing;
 
-
-
 /// <summary>
 /// QUERYMAP block – how to draw a special map highlighting query results.
 /// </summary>

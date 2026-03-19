@@ -5,20 +5,21 @@
     <ImplicitUsings>enable</ImplicitUsings>
     <Nullable>enable</Nullable>
     <NoWarn>$(NoWarn);S1133</NoWarn>
+    <EmitCompilerGeneratedFiles>True</EmitCompilerGeneratedFiles>
   </PropertyGroup>
+
+  <ItemGroup>
+    <Compile Remove="Builders\BuilderExtensions.cs" />
+  </ItemGroup>
 
   <ItemGroup>
     <PackageReference Include="CodeOfChaos.Unions" VersionOverride="6.4.0" />
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="BuilderGenerator">
-      <PrivateAssets>analyzers</PrivateAssets>
-    </PackageReference>
-    <!--<PackageReference Include="BuilderGenerator">
+    <PackageReference Include="Altemiq.Patterns.Builder.Generator">
       <PrivateAssets>all</PrivateAssets>
-      <IncludeAssets>runtime; build; native; contentfiles; analyzers</IncludeAssets>
-    </PackageReference>-->
+    </PackageReference>
     <PackageReference Include="CodeOfChaos.Unions.Generators">
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers</IncludeAssets>

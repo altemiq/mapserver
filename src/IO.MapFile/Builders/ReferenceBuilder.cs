@@ -7,14 +7,7 @@
 namespace Altemiq.IO.MapFile.Builders;
 
 /// <summary>
-/// The <see cref="Reference"/> <see cref="BuilderGenerator.Builder{T}"/>.
+/// The <see cref="Reference"/> builder.
 /// </summary>
-[BuilderGenerator.BuilderFor(typeof(Reference), includeInternals: true)]
-public sealed partial class ReferenceBuilder
-{
-    /// <summary>
-    /// Creates a new instance of <see cref="ReferenceBuilder"/>.
-    /// </summary>
-    /// <returns>The builder.</returns>
-    public static ReferenceBuilder New() => new();
-}
+[Altemiq.Patterns.Builder.GenerateBuilderFor<Reference>]
+public sealed partial class ReferenceBuilder;

@@ -11,11 +11,12 @@ using System.Drawing;
 /// <summary>
 /// LEGEND block – auto or embedded legend image &amp; label formatting.
 /// </summary>
-public sealed class Legend
+public sealed partial class Legend
 {
     /// <summary>
     /// Gets or sets the map status.
     /// </summary>
+    [System.ComponentModel.DefaultValue(MapStatus.Off)]
     public MapStatus Status { get; set; } = MapStatus.Off;
 
     /// <summary>

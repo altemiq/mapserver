@@ -5,6 +5,7 @@
 // -----------------------------------------------------------------------
 
 namespace Altemiq.IO.MapFile;
+
 /// <summary>
 /// OUTPUTFORMAT object – declares image/vector output encodings (e.g., PNG, JPEG, PDF, SVG, GeoTIFF).
 /// </summary>

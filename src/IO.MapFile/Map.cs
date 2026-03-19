@@ -71,10 +71,10 @@ public sealed class Map
     public int? DebugLevel { get; set; }
 
     /// <summary>Gets arbitrary environment and system configuration (CONFIG entries).</summary>
-    public IDictionary<string, string> Config { get; internal init; } = new Dictionary<string, string>(StringComparer.Ordinal);
+    public IDictionary<string, string> Config { get; } = new Dictionary<string, string>(StringComparer.Ordinal);
 
     /// <summary>Gets free-form metadata (METADATA) available to templates and OGC services.</summary>
-    public IDictionary<string, string> Metadata { get; internal init; } = new Dictionary<string, string>(StringComparer.Ordinal);
+    public IDictionary<string, string> Metadata { get; } = new Dictionary<string, string>(StringComparer.Ordinal);
 
     /// <summary>Gets or sets global PROJECTION for output.</summary>
     public Projection? Projection { get; set; }
@@ -83,7 +83,7 @@ public sealed class Map
     public Web? Web { get; set; }
 
     /// <summary>Gets declared OUTPUTFORMATs; referenced by <see cref="ImageType"/>.</summary>
-    public IList<OutputFormat> OutputFormats { get; internal init; } = [];
+    public IList<OutputFormat> OutputFormats { get; } = [];
 
     /// <summary>Gets or sets legend block.</summary>
     public Legend? Legend { get; set; }
@@ -98,5 +98,5 @@ public sealed class Map
     public QueryMap? QueryMap { get; set; }
 
     /// <summary>Gets child layers, evaluated top-to-bottom.</summary>
-    public IList<Layer> Layers { get; internal init; } = [];
+    public IList<Layer> Layers { get; } = [];
 }

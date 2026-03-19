@@ -11,13 +11,41 @@ namespace Altemiq.IO.MapFile;
 /// </summary>
 public enum MapUnits
 {
+    /// <summary>
+    /// Pixel units.
+    /// </summary>
     Pixels,
+
+    /// <summary>
+    /// Feet units.
+    /// </summary>
     Feet,
+
+    /// <summary>
+    /// Inches units.
+    /// </summary>
     Inches,
+
+    /// <summary>
+    /// Kilometer units.
+    /// </summary>
     Kilometers,
+
+    /// <summary>
+    /// Meter units.
+    /// </summary>
     Meters,
+
+    /// <summary>
+    /// Mile units.
+    /// </summary>
     Miles,
+
+    /// <summary>
+    /// Nautical mile units.
+    /// </summary>
     NauticalMiles,
+
     /// <summary>Decimal degrees.</summary>
     DD,
 }

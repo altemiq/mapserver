@@ -7,14 +7,7 @@
 namespace Altemiq.IO.MapFile.Builders;
 
 /// <summary>
-/// The <see cref="OutputFormat"/> <see cref="BuilderGenerator.Builder{T}"/>.
+/// The <see cref="OutputFormat"/> builder.
 /// </summary>
-[BuilderGenerator.BuilderFor(typeof(OutputFormat), includeInternals: true)]
-public sealed partial class OutputFormatBuilder
-{
-    /// <summary>
-    /// Creates a new instance of <see cref="OutputFormatBuilder"/>.
-    /// </summary>
-    /// <returns>The builder.</returns>
-    public static OutputFormatBuilder New() => new();
-}
+[Altemiq.Patterns.Builder.GenerateBuilderFor<OutputFormat>]
+public sealed partial class OutputFormatBuilder;

@@ -7,14 +7,7 @@
 namespace Altemiq.IO.MapFile.Builders;
 
 /// <summary>
-/// The <see cref="Composite"/> <see cref="BuilderGenerator.Builder{T}"/>.
+/// The <see cref="Composite"/> builder.
 /// </summary>
-[BuilderGenerator.BuilderFor(typeof(Composite), includeInternals: true)]
-public sealed partial class CompositeBuilder
-{
-    /// <summary>
-    /// Creates a new instance of <see cref="CompositeBuilder"/>.
-    /// </summary>
-    /// <returns>The builder.</returns>
-    public static CompositeBuilder New() => new();
-}
+[Altemiq.Patterns.Builder.GenerateBuilderFor<Composite>]
+public sealed partial class CompositeBuilder;

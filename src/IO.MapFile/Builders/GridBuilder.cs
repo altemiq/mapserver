@@ -7,14 +7,7 @@
 namespace Altemiq.IO.MapFile.Builders;
 
 /// <summary>
-/// The <see cref="Grid"/> <see cref="BuilderGenerator.Builder{T}"/>.
+/// The <see cref="Grid"/> builder.
 /// </summary>
-[BuilderGenerator.BuilderFor(typeof(Grid), includeInternals: true)]
-public sealed partial class GridBuilder
-{
-    /// <summary>
-    /// Creates a new instance of <see cref="GridBuilder"/>.
-    /// </summary>
-    /// <returns>The builder.</returns>
-    public static GridBuilder New() => new();
-}
+[Altemiq.Patterns.Builder.GenerateBuilderFor<Grid>]
+public sealed partial class GridBuilder;

@@ -10,6 +10,8 @@ using System.Drawing;
 using System.Globalization;
 using System.Text;
 
+#pragma warning disable MA0111, S6618
+
 /// <summary>
 /// Serializes the model back to a MapServer .map file text.
 /// </summary>
@@ -161,7 +163,9 @@ public static class MapfileSerializer
         private readonly MapfileSerializationOptions options = o;
         private int indent;
 
+#pragma warning disable IDE0060, RCS1163, S1172
         public void Line(System.IFormatProvider? provider, [System.Runtime.CompilerServices.InterpolatedStringHandlerArgument("", nameof(provider))] ref IndentInterpolatedStringHandler handler) => this.builder.Append(this.options.NewLine);
+#pragma warning restore IDE0060, RCS1163, S1172
 
         public void Line(ReadOnlySpan<char> text = default)
         {
@@ -234,6 +238,7 @@ public static class MapfileSerializer
             }
         }
 
+#pragma warning disable IDE0060, RCS1163, S1172
         public void Prop(string name, bool quote, System.IFormatProvider? provider, [System.Runtime.CompilerServices.InterpolatedStringHandlerArgument("", nameof(provider), nameof(name), nameof(quote))] ref IndentInterpolatedStringHandler handler)
         {
             if (quote)
@@ -243,18 +248,7 @@ public static class MapfileSerializer
 
             this.builder.Append(this.options.NewLine);
         }
-
-        public void PropQuoted(string name, bool quote, System.IFormatProvider? provider, [System.Runtime.CompilerServices.InterpolatedStringHandlerArgument("", nameof(provider), nameof(name), nameof(quote))] ref IndentInterpolatedStringHandler handler)
-        {
-            if (quote)
-            {
-                this.builder.Append('\"');
-            }
-
-            this.builder.Append(this.options.NewLine);
-        }
-
-        public void PropQuoted(string name, System.IFormatProvider? provider, [System.Runtime.CompilerServices.InterpolatedStringHandlerArgument("", nameof(provider), nameof(name))] ref IndentInterpolatedStringHandler handler) => this.builder.Append('\"').Append(this.options.NewLine);
+#pragma warning restore IDE0060, RCS1163, S1172
 
         public void PropQuoted(string name, string? value)
         {

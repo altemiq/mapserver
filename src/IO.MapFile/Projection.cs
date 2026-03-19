@@ -5,6 +5,7 @@
 // -----------------------------------------------------------------------
 
 namespace Altemiq.IO.MapFile;
+
 /// <summary>
 /// PROJECTION – declares the coordinate system using PROJ parameters (prefer EPSG when available).
 /// </summary>
@@ -22,5 +23,5 @@ public sealed class Projection
     /// <summary>
     /// Gets pROJ parameter lines as declared (e.g., "init=epsg:4326" or "proj=utm", ...).
     /// </summary>
-    public IList<string> Parameters { get; internal init; } = [];
+    public IList<string> Parameters { get; } = [];
 }

@@ -73,14 +73,14 @@ public sealed class Class
     /// <summary>
     /// Gets style(s) used to draw features of this class.
     /// </summary>
-    public IList<Style> Styles { get; internal init; } = [];
+    public IList<Style> Styles { get; } = [];
 
     /// <summary>
     /// Gets the style list.
     /// A CLASS can contain multiple STYLE objects that are overlaid/stacked to form complex symbols.
     /// Use STYLEs (not legacy color/size keys).
     /// </summary>
-    public IList<Label> Labels { get; internal init; } = [];
+    public IList<Label> Labels { get; } = [];
 
-    public IDictionary<string, string> Validation { get; internal init; } = new Dictionary<string, string>(StringComparer.Ordinal);
+    public IDictionary<string, string> Validation { get; } = new Dictionary<string, string>(StringComparer.Ordinal);
 }

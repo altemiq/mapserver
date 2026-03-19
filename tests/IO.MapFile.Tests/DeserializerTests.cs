@@ -1,10 +1,7 @@
 ﻿namespace Altemiq.IO.MapFile.Tests;
 
-using System.Runtime.CompilerServices;
-
 public class DeserializerTests
 {
-
     [Test]
     public async Task Parse_Comments_AreIgnored()
     {
@@ -305,5 +302,4 @@ public class DeserializerTests
         await Assert.That(map.Name).IsEqualTo("WMS");
         await Assert.That(map.Layers.First().Classes.First().Styles.First().Color).IsEqualTo(new Attribute("colour_rgb"));
     }
-
 }

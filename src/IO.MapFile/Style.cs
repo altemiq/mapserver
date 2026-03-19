@@ -14,9 +14,11 @@ using System.Drawing;
 public sealed class Style
 {
     /// <summary>Gets or sets primary fill/line color; polygons use this as fill, lines as stroke.</summary>
+    [System.ComponentModel.DefaultValue(typeof(ColorOrAttribute), nameof(None))]
     public ColorOrAttribute Color { get; set; }
 
     /// <summary>Gets or sets outline/stroke color for polygon fills or symbol outlines, if applicable.</summary>
+    [System.ComponentModel.DefaultValue(typeof(ColorOrAttribute), nameof(None))]
     public ColorOrAttribute OutlineColor { get; set; }
 
     /// <summary>Gets or sets symbol name (from SYMBOLSET or inline SYMBOL).</summary>
@@ -32,10 +34,11 @@ public sealed class Style
     /// Gets or sets angle may be numeric degrees, "AUTO", "AUTO2", "FOLLOW", or an attribute binding "[FIELD]".
     /// Provide as string to preserve full expressiveness.
     /// </summary>
+    [System.ComponentModel.DefaultValue(typeof(Angle), "None")]
     public Angle Angle { get; set; }
 
     /// <summary>Gets pattern for dashed lines, e.g., [10, 5, 4, 5]. Units follow SIZEUNITS/renderer.</summary>
-    public IList<double> Pattern { get; internal init; } = [];
+    public IList<double> Pattern { get; } = [];
 
     /// <summary>Gets or sets gap for decorations along lines; semantics depend on symbolization.</summary>
     public double? Gap { get; set; }

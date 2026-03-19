@@ -152,6 +152,35 @@ public ref struct MapfileParser(ReadOnlySpan<char> text)
         return map;
     }
 
+    private static System.Drawing.Color ParseHexColor(string hex)
+    {
+        // #RRGGBB or #RRGGBBAA
+        hex = hex.Trim();
+        if (hex.StartsWith('#'))
+        {
+            hex = hex[1..];
+        }
+
+        if (hex.Length == 6)
+        {
+            var r = Convert.ToInt32(hex[..2], 16);
+            var g = Convert.ToInt32(hex.Substring(2, 2), 16);
+            var b = Convert.ToInt32(hex.Substring(4, 2), 16);
+            return System.Drawing.Color.FromArgb(r, g, b);
+        }
+
+        if (hex.Length == 8)
+        {
+            var r = Convert.ToInt32(hex[..2], 16);
+            var g = Convert.ToInt32(hex.Substring(2, 2), 16);
+            var b = Convert.ToInt32(hex.Substring(4, 2), 16);
+            var a = Convert.ToInt32(hex.Substring(6, 2), 16);
+            return System.Drawing.Color.FromArgb(a, r, g, b);
+        }
+
+        throw new FormatException($"Invalid hex color: #{hex}");
+    }
+
     private Web ReadWeb()
     {
         var web = new Web();
@@ -1020,7 +1049,7 @@ public ref struct MapfileParser(ReadOnlySpan<char> text)
                 }
                 else if (angle.TryGetAsT0(out var st))
                 {
-                    s.Angle = st is "AUTO" ? Auto.Instance : new Attribute(st);
+                    s.Angle = st is "AUTO" ? Auto.Empty : new Attribute(st);
                 }
             }
             else if (this.tokenReader.TryAcceptKeyword("PATTERN"))
@@ -1175,35 +1204,6 @@ public ref struct MapfileParser(ReadOnlySpan<char> text)
         {
             this.tokenReader.ReadAny(); // consume one token to avoid infinite loop
         }
-    }
-
-    private static System.Drawing.Color ParseHexColor(string hex)
-    {
-        // #RRGGBB or #RRGGBBAA
-        hex = hex.Trim();
-        if (hex.StartsWith('#'))
-        {
-            hex = hex[1..];
-        }
-
-        if (hex.Length == 6)
-        {
-            var r = Convert.ToInt32(hex[..2], 16);
-            var g = Convert.ToInt32(hex.Substring(2, 2), 16);
-            var b = Convert.ToInt32(hex.Substring(4, 2), 16);
-            return System.Drawing.Color.FromArgb(r, g, b);
-        }
-
-        if (hex.Length == 8)
-        {
-            var r = Convert.ToInt32(hex[..2], 16);
-            var g = Convert.ToInt32(hex.Substring(2, 2), 16);
-            var b = Convert.ToInt32(hex.Substring(4, 2), 16);
-            var a = Convert.ToInt32(hex.Substring(6, 2), 16);
-            return System.Drawing.Color.FromArgb(a, r, g, b);
-        }
-
-        throw new FormatException($"Invalid hex color: #{hex}");
     }
 
     private ColorOrAttribute ReadColorOrAttribute()

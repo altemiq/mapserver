@@ -5,6 +5,7 @@
 // -----------------------------------------------------------------------
 
 namespace Altemiq.IO.MapFile;
+
 /// <summary>
 /// LEADER block – draws leader lines from labels to features when there is not enough room.
 /// </summary>

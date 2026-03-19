@@ -7,14 +7,7 @@
 namespace Altemiq.IO.MapFile.Builders;
 
 /// <summary>
-/// The <see cref="Leader"/> <see cref="BuilderGenerator.Builder{T}"/>.
+/// The <see cref="Leader"/> builder.
 /// </summary>
-[BuilderGenerator.BuilderFor(typeof(Leader), includeInternals: true)]
-public sealed partial class LeaderBuilder
-{
-    /// <summary>
-    /// Creates a new instance of <see cref="LeaderBuilder"/>.
-    /// </summary>
-    /// <returns>The builder.</returns>
-    public static LeaderBuilder New() => new();
-}
+[Altemiq.Patterns.Builder.GenerateBuilderFor<Leader>]
+public sealed partial class LeaderBuilder;

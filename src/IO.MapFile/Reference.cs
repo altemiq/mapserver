@@ -8,10 +8,6 @@ namespace Altemiq.IO.MapFile;
 
 using System.Drawing;
 
-
-
-
-
 /// <summary>
 /// REFERENCE block – miniature locator map and highlight box settings.
 /// </summary>

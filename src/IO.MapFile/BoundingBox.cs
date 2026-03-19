@@ -9,10 +9,10 @@ namespace Altemiq.IO.MapFile;
 /// <summary>
 /// Axis-aligned bounding box (minx, miny, maxx, maxy) in map/layer coordinate units.
 /// </summary>
-/// <param name="minX"></param>
-/// <param name="minY"></param>
-/// <param name="maxX"></param>
-/// <param name="maxY"></param>
+/// <param name="minX">The minimum X-value.</param>
+/// <param name="minY">The minimum Y-value.</param>
+/// <param name="maxX">The maximum X-value.</param>
+/// <param name="maxY">The maximum Y-value.</param>
 [System.Runtime.InteropServices.StructLayout(System.Runtime.InteropServices.LayoutKind.Sequential)]
 public readonly struct BoundingBox(double minX, double minY, double maxX, double maxY)
 {

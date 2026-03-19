@@ -7,14 +7,7 @@
 namespace Altemiq.IO.MapFile.Builders;
 
 /// <summary>
-/// The <see cref="Identify"/> <see cref="BuilderGenerator.Builder{T}"/>.
+/// The <see cref="Identify"/> builder.
 /// </summary>
-[BuilderGenerator.BuilderFor(typeof(Identify), includeInternals: true)]
-public sealed partial class IdentifyBuilder
-{
-    /// <summary>
-    /// Creates a new instance of <see cref="IdentifyBuilder"/>.
-    /// </summary>
-    /// <returns>The builder.</returns>
-    public static IdentifyBuilder New() => new();
-}
+[Altemiq.Patterns.Builder.GenerateBuilderFor<Identify>]
+public sealed partial class IdentifyBuilder;
